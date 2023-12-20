@@ -2,13 +2,52 @@ const Offer = require("../models/offerModel");
 const mongoose = require("mongoose");
 const multer = require("multer");
 
-// get all offers
+// get all offers hedhy normalement yjibli nrm
+
+// const getOffers = async (req, res) => {
+//   try {
+//     const Offers = await Offer.find({}).sort({ createdAt: -1 });
+//     console.log("Retrieved Offers:", Offers);
+//     res.status(200).json(Offers);
+//   } catch (error) {
+//     console.error("Error retrieving offers:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
 
 const getOffers = async (req, res) => {
-  //desc order
-  const Offers = await Offer.find({}).sort({ createdAt: -1 });
-  res.status(200).json(Offers);
+  try {
+    const offers = await Offer.find({}).sort({ createdAt: -1 });
+
+    // Convert binary image data to base64
+    const offersWithBase64Image = offers.map((offer) => {
+      const image =
+        offer.image && offer.image.data
+          ? {
+              data: offer.image.data.toString("base64"),
+              contentType: offer.image.contentType,
+            }
+          : null;
+
+      return {
+        title: offer.title,
+        description: offer.description,
+        status: offer.status,
+        duration: offer.duration,
+        budget: offer.budget,
+        image,
+        createdAt: offer.createdAt,
+        updatedAt: offer.updatedAt,
+      };
+    });
+
+    res.status(200).json(offersWithBase64Image);
+  } catch (error) {
+    console.error("Error retrieving offers:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
+
 
 // get single offer
 const getOffer = async (req, res) => {
@@ -26,29 +65,6 @@ const getOffer = async (req, res) => {
   res.status(200).json(newOffer);
 };
 
-// // create offer
-// const createOffer= async (req, res) => {
-//   const { title, description, status, duration , budget } = req.body;
-// console.log("slm");
-//   // add to db
-//   try {
-//     const newOffer = await Offer.create({
-//       title,
-//       description,
-//       status,
-//       duration,
-//       budget,
-//     });
-//      res.status(200).json({
-//        success: true,
-//        message: "Offer created successfully!",
-//        offer: newOffer,
-//      });
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-
-//   }
-// };
 
 const createOffer = async (req, res) => {
   try {
