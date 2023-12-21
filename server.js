@@ -4,12 +4,9 @@ const mongoose = require("mongoose");
 
 const offerRoutes = require("./routes/offer");
 
-<<<<<<< HEAD
-=======
 //user
 const userRoutes = require('./routes/user')
 
->>>>>>> origin/Yosser
 // express app
 const app = express();
 
@@ -28,11 +25,8 @@ app.use((req, res, next) => {
 // routes
 app.use("/offers", offerRoutes);
 
-<<<<<<< HEAD
 
-=======
 app.use('/user', userRoutes)
->>>>>>> origin/Yosser
 
 
 //connect to db
