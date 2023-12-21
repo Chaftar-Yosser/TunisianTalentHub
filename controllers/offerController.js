@@ -30,6 +30,10 @@ const getOffers = async (req, res) => {
           : null;
 
       return {
+<<<<<<< HEAD
+=======
+        _id: offer._id,
+>>>>>>> origin/Yosser
         title: offer.title,
         description: offer.description,
         status: offer.status,
@@ -204,4 +208,8 @@ module.exports = {
   getOffer,
   deleteOffer,
   updateOffer,
+<<<<<<< HEAD
 };
+=======
+};
+>>>>>>> origin/Yosser
